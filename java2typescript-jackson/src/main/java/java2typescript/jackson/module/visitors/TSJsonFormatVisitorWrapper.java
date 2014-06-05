@@ -68,11 +68,14 @@ public class TSJsonFormatVisitorWrapper extends ABaseTSJsonFormatVisitor impleme
 
 	/** Either Java simple name or @JsonTypeName annotation */
 	private String getName(JavaType type) {
+		String pkgName = type.getRawClass().getPackage().getName();
+		String prefix = pkgName.substring(pkgName.lastIndexOf(".") +1, pkgName.length()) + ".";
+		
 		JsonTypeName typeName = type.getRawClass().getAnnotation(JsonTypeName.class);
 		if (typeName != null) {
-			return typeName.value();
+			return prefix + typeName.value();
 		} else {
-			return type.getRawClass().getSimpleName();
+			return prefix + type.getRawClass().getSimpleName();
 		}
 	}
 

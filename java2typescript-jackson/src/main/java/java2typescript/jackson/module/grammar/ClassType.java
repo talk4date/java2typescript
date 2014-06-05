@@ -44,7 +44,7 @@ public class ClassType extends AbstractNamedType {
 
 	@Override
 	public void writeDef(Writer writer) throws IOException {
-		writer.write(format("interface %s {\n", name));
+		writer.write(format("interface %s {\n", name.substring(name.indexOf('.') + 1, name.length())));
 		for (Entry<String, AbstractType> entry : fields.entrySet()) {
 			writer.write(format("    %s: ", entry.getKey()));
 			entry.getValue().write(writer);
