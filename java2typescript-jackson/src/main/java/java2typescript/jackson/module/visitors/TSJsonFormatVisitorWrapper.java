@@ -120,12 +120,7 @@ public class TSJsonFormatVisitorWrapper extends ABaseTSJsonFormatVisitor impleme
 
 	@Override
 	public JsonStringFormatVisitor expectStringFormat(JavaType jType) throws JsonMappingException {
-		if (jType.getRawClass().isEnum()) {
-			type = parseEnumOrGetFromCache(jType);
-			return null;
-		} else {
-			return setTypeAndReturn(new TSJsonStringFormatVisitor(this));
-		}
+		return setTypeAndReturn(new TSJsonStringFormatVisitor(this));
 	}
 
 	@Override

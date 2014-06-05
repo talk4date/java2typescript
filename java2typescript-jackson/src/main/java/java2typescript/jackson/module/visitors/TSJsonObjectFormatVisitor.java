@@ -52,7 +52,6 @@ public class TSJsonObjectFormatVisitor extends ABaseTSJsonFormatVisitor<ClassTyp
 		super(parentHolder);
 		type = new ClassType(className);
 		this.clazz = clazz;
-		addPublicMethods();
 	}
 
 	private void addField(String name, AbstractType fieldType) {
