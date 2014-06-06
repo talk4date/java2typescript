@@ -123,6 +123,10 @@ public class TSJsonFormatVisitorWrapper extends ABaseTSJsonFormatVisitor impleme
 
 	@Override
 	public JsonStringFormatVisitor expectStringFormat(JavaType jType) throws JsonMappingException {
+		// also serialize enums, but reference them as strings
+		if(jType.getRawClass().isEnum()) {
+			parseEnumOrGetFromCache(jType);
+		}
 		return setTypeAndReturn(new TSJsonStringFormatVisitor(this));
 	}
 
