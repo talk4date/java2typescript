@@ -15,6 +15,7 @@
  ******************************************************************************/
 package java2typescript.jackson.module.visitors;
 
+import java2typescript.jackson.module.grammar.ClassType;
 import java2typescript.jackson.module.grammar.EnumType;
 import java2typescript.jackson.module.grammar.Module;
 import java2typescript.jackson.module.grammar.base.AbstractNamedType;
@@ -87,7 +88,10 @@ public class TSJsonFormatVisitorWrapper extends ABaseTSJsonFormatVisitor impleme
 
 		if (namedType == null) {
 			TSJsonObjectFormatVisitor visitor = new TSJsonObjectFormatVisitor(this, name, javaType.getRawClass());
-			type = visitor.getType();
+			ClassType classType = visitor.getType();
+			classType.setCanonicalName(javaType.getRawClass().getCanonicalName());
+			type = classType;
+			
 			getModule().getNamedTypes().put(visitor.getType().getName(), visitor.getType());
 			return visitor;
 		} else {
@@ -104,6 +108,7 @@ public class TSJsonFormatVisitorWrapper extends ABaseTSJsonFormatVisitor impleme
 			for (Object val : javaType.getRawClass().getEnumConstants()) {
 				enumType.getValues().add(val.toString());
 			}
+			enumType.setCanonicalName(javaType.getRawClass().getCanonicalName());
 			getModule().getNamedTypes().put(name, enumType);
 			return enumType;
 		} else {

@@ -22,6 +22,16 @@ import java.io.Writer;
 abstract public class AbstractNamedType extends AbstractType {
 
 	protected final String name;
+	
+	/**
+	 * If this is non-null this is the name to use to reference a type from another position than from the definition.
+	 */
+	private String nameReferenceOverride;
+	
+	/**
+	 * the full canonical java name.
+	 */
+	private String canonicalName;
 
 	public AbstractNamedType(String className) {
 		this.name = className;
@@ -29,11 +39,23 @@ abstract public class AbstractNamedType extends AbstractType {
 
 	@Override
 	public void write(Writer writer) throws IOException {
-		writer.write(name);
+		writer.write(nameReferenceOverride != null ? nameReferenceOverride : name);
 	}
 
 	public String getName() {
 		return name;
+	}
+	
+	public void setNameReferenceOverride(String nameReferenceOverride) {
+		this.nameReferenceOverride = nameReferenceOverride;
+	}
+	
+	public String getCanonicalName() {
+		return canonicalName;
+	}
+	
+	public void setCanonicalName(String javaPackage) {
+		this.canonicalName = javaPackage;
 	}
 
 	abstract public void writeDef(Writer writer) throws IOException;
